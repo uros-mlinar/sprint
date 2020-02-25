@@ -1,0 +1,10 @@
+CREATE USER IF NOT EXISTS jwduser IDENTIFIED WITH mysql_native_password BY 'pass';
+
+DROP DATABASE IF EXISTS sprint;
+CREATE DATABASE sprint DEFAULT CHARACTER SET utf8;
+
+USE sprint;
+
+GRANT ALL ON sprint.* TO 'jwduser'@'%';
+
+FLUSH PRIVILEGES;

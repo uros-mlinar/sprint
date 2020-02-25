@@ -1,0 +1,88 @@
+<div class="row">
+    <div ng-controller="ZadaciCtrl" class="col-12">
+
+        <!-- dodavanje -->
+
+        <form>
+            <div class="form-group">
+                <label for="ime">Ime</label>
+                <input class="form-control" id="ime" ng-model="zadatak.ime" />
+            </div>
+            <div class="form-group">
+                <label for="zaduzeni">Zaduzeni</label>
+                <input class="form-control" id="zaduzeni" ng-model="zadatak.zaduzeni" />
+            </div>
+            <div class="form-group">
+                <label for="bodovi">Bodovi</label>
+                <input class="form-control" id="bodovi" ng-model="zadatak.bodovi" />
+            </div>
+            <div class="form-group">
+                <label for="stanje">Stanje</label>
+                <select class="form-control" id="stanje" ng-model="zadatak.stanjeID">
+                    <option ng-repeat="s in stanja" value="{{s.id}}">{{s.ime}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="sprint">Sprint</label>
+                <select class="form-control" id="sprint" ng-model="zadatak.sprintID">
+                    <option ng-repeat="s in sprintovi" value="{{s.id}}">{{s.ime}}</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" ng-click="doAdd()">Dodaj</button>
+        </form>
+
+        <!-- pretraga -->
+
+        <input type="checkbox" ng-model="prikaziFormu" id="prikaz" />
+        <label for="prikaz">Prikazi formu za pretragu</label>
+        <form ng-show="prikaziFormu">
+            <div class="form-group">
+                <label for="imeZadatka">Ime Zadatka</label>
+                <input class="form-control" id="imeZadatka" ng-model = "search.imeZadatka"/>
+            </div>
+            <div class="form-group">
+                <label for="sprintovi">Sprint</label>
+                <select class="form-control" id="sprintovi" ng-model="search.sprintID">
+                    <option ng-repeat="s in sprintovi" value="{{s.id}}">{{s.ime}}</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" ng-click="doSearch()">Pretrazi</button>
+        </form>
+
+        <!-- prikaz tabele -->
+
+        <div class="btn-group float-right" style="margin-bottom:5px">
+            <button ng-disabled="pageNum == 0" ng-click="changePage(-1)" class="btn btn-primary">Prethodna</button>
+            <button ng-disabled="pageNum == totalPages - 1" ng-click="changePage(1)" class="btn btn-primary">Sledeca</button>
+        </div>
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Ime</th>
+                    <th>Zaduzeni</th>
+                    <th>Bodovi</th>
+                    <th>Stanje</th>
+                    <th>Sprint</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="z in zadaci">
+                    <td>{{z.ime}}</td>
+                    <td>{{z.zaduzeni}}</td>
+                    <td>{{z.bodovi}}</td>
+                    <td>{{z.stanjeNaziv}}</td>
+                    <td>{{z.sprintNaziv}}</td>
+                    <td>
+                        <button class="btn btn-primary" ng-disabled = "z.stanjeNaziv == 'zavrsen'"  ng-click="getZadatakZaIzmenu(z.id)">Predji na sledece stanje</button>
+                        <button class="btn btn-warning" ng-click="goToEdit(z.id)">Edit</button>
+                        <button class="btn btn-danger" ng-click="delete(z.id)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
